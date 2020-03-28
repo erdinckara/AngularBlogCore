@@ -25,6 +25,18 @@ namespace AngularBlogCore.API
             {
                 options.UseSqlServer(Configuration["ConnectionStrings:DefaultSqlConnectionString"]);
             });
+
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(x =>
+                {
+                    x
+                    .AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials();
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,6 +52,9 @@ namespace AngularBlogCore.API
             app.UseRouting();
 
             //app.UseAuthorization();
+
+            app.UseCors();
+            app.UseStaticFiles();
 
             app.UseEndpoints(endpoints =>
             {
