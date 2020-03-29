@@ -28,14 +28,13 @@ namespace AngularBlogCore.API
 
             services.AddCors(options =>
             {
-                options.AddDefaultPolicy(x =>
-                {
-                    x
-                    .AllowAnyOrigin()
-                    .AllowAnyHeader()
-                    .AllowAnyMethod()
-                    .AllowCredentials();
-                });
+                options.AddPolicy("AllowAny", builder =>
+                 {
+                     builder
+                     .AllowAnyOrigin()
+                     .AllowAnyHeader()
+                     .AllowAnyMethod();
+                 });
             });
         }
 
@@ -53,12 +52,12 @@ namespace AngularBlogCore.API
 
             //app.UseAuthorization();
 
-            app.UseCors();
+            app.UseCors("AllowAny");
             app.UseStaticFiles();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapDefaultControllerRoute();
             });
         }
     }
