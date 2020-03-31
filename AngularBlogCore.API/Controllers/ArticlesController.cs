@@ -1,11 +1,10 @@
-﻿using System;
+﻿using AngularBlogCore.API.Models;
+using AngularBlogCore.API.Response;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using AngularBlogCore.API.Models;
 
 namespace AngularBlogCore.API.Controllers
 {
@@ -25,6 +24,44 @@ namespace AngularBlogCore.API.Controllers
         public async Task<ActionResult<IEnumerable<Article>>> GetArticle()
         {
             return await _context.Article.ToListAsync();
+        }
+
+        // GET: api/Articles
+        [HttpGet("{page}/{pageSize}")]
+        public async Task<IActionResult> GetArticle(int page = 1, int pageSize = 5)
+        {
+            IQueryable<Article> query = _context.Article
+                .Include(x => x.Category)
+                .Include(x => x.Comment)
+                .OrderByDescending(x => x.PublishDate);
+
+            var articleResponse = (await query
+                                    .Skip(pageSize * (page - 1))
+                                    .Take(pageSize)
+                                    .ToListAsync())
+                                    .Select(x => new ArticleResponse()
+                                    {
+                                        Id = x.Id,
+                                        Title = x.Title,
+                                        ContentMain = x.ContentMain,
+                                        ContentSummary = x.ContentSummary,
+                                        Picture = x.Picture,
+                                        ViewCount = x.ViewCount,
+                                        CommentCount = x.Comment.Count,
+                                        Category = new CategoryResponse()
+                                        {
+                                            Id = x.Category.Id,
+                                            Name = x.Category.Name
+                                        }
+                                    });
+
+            var result = new
+            {
+                TotalCount = articleResponse.Count(),
+                Articles = articleResponse
+            };
+
+            return Ok(result);
         }
 
         // GET: api/Articles/5
