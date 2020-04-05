@@ -20,6 +20,10 @@ const routes: Routes = [
         component: HomeComponent
       },
       {
+        path: "page/:page",
+        component: HomeComponent
+      },
+      {
         path: "aboutme",
         component: AboutMeComponent
       },
