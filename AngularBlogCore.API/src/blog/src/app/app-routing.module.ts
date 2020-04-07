@@ -7,6 +7,7 @@ import { MainLayoutComponent } from './layout/main-layout/main-layout.component'
 import { ContactComponent } from './pages/contact/contact.component';
 import { HomeComponent } from './pages/home/home.component';
 import { AboutMeComponent } from './pages/about-me/about-me.component';
+import { ArticleComponent } from './pages/article/article.component';
 
 
 
@@ -22,6 +23,10 @@ const routes: Routes = [
       {
         path: "page/:page",
         component: HomeComponent
+      },
+      {
+        path: "article/:id",
+        component: ArticleComponent
       },
       {
         path: "aboutme",

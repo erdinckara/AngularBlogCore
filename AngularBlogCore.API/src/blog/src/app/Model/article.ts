@@ -5,7 +5,7 @@ export class Article {
   title: string;
   contentMain: string;
   contentSummary: string;
-  publishData: Date;
+  publishDate: Date;
   picture: string;
   viewCount: number;
   commentCount: number;

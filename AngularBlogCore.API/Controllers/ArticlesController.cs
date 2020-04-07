@@ -25,6 +25,9 @@ namespace AngularBlogCore.API.Controllers {
         // GET: api/Articles
         [HttpGet ("{page}/{pageSize}")]
         public async Task<IActionResult> GetArticle (int page = 1, int pageSize = 5) {
+
+            System.Threading.Thread.Sleep (3000);
+
             IQueryable<Article> query = _context.Article
                 .Include (x => x.Category)
                 .Include (x => x.Comment)
@@ -59,14 +62,32 @@ namespace AngularBlogCore.API.Controllers {
 
         // GET: api/Articles/5
         [HttpGet ("{id}")]
-        public async Task<ActionResult<Article>> GetArticle (int id) {
-            var article = await _context.Article.FindAsync (id);
+        public async Task<ActionResult<ArticleResponse>> GetArticle (int id) {
+           
+             System.Threading.Thread.Sleep (3000);
+             
+            var article = await _context.Article
+                .Include (x => x.Category)
+                .Include (x => x.Comment)
+                .FirstOrDefaultAsync (x => x.Id == id);
 
             if (article == null) {
                 return NotFound ();
             }
 
-            return article;
+            ArticleResponse articleResponse = new ArticleResponse () {
+                Id = article.Id,
+                Title = article.Title,
+                ContentMain = article.ContentMain,
+                ContentSummary = article.ContentSummary,
+                Picture = article.Picture,
+                PublishDate = article.PublishDate,
+                ViewCount = article.ViewCount,
+                Category = new CategoryResponse () { Id = article.Category.Id, Name = article.Category.Name },
+                CommentCount = article.Comment.Count
+            };
+
+            return articleResponse;
         }
 
         // PUT: api/Articles/5
