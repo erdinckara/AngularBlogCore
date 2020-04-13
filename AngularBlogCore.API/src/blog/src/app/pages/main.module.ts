@@ -11,6 +11,9 @@ import { ContactComponent } from './contact/contact.component';
 import { MainLayoutComponent } from '../layout/main-layout/main-layout.component';
 import { MainNavComponent } from '../nav/main-nav/main-nav.component';
 import { ArticleComponent } from './article/article.component';
+import { CategoryArticlesComponent } from './category-articles/category-articles.component';
+import { SearchArticleComponent } from './search-article/search-article.component';
+import { ArchiveComponent } from './archive/archive.component';
 
 
 
@@ -21,7 +24,10 @@ import { ArticleComponent } from './article/article.component';
     HomeComponent,
     AboutMeComponent,
     ContactComponent,
-    ArticleComponent
+    ArticleComponent,
+    CategoryArticlesComponent,
+    SearchArticleComponent,
+    ArchiveComponent
   ],
   imports: [
     CommonModule,

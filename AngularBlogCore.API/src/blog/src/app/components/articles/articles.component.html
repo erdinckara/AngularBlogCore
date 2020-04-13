@@ -1,26 +1,26 @@
 <div *ngIf="articleService.loading">
-<main *ngFor="let item of createRange()" class="page mb-2">
-  <!-- Content -->
-  <div class="page-content">
+  <main *ngFor="let item of createRange()" class="page mb-2">
+    <!-- Content -->
+    <div class="page-content">
 
       <!-- Placeholder Content -->
       <div class="placeholder-content">
-          <div class="placeholder-content_item"></div>
-          <div class="placeholder-content_item"></div>
-          <div class="placeholder-content_item"></div>
-          <div class="placeholder-content_item"></div>
-          <div class="placeholder-content_item"></div>
-          <div class="placeholder-content_item"></div>
-          <div class="placeholder-content_item"></div>
-          <div class="placeholder-content_item"></div>
-          <div class="placeholder-content_item"></div>
-          <div class="placeholder-content_item"></div>
-          <div class="placeholder-content_item"></div>
+        <div class="placeholder-content_item"></div>
+        <div class="placeholder-content_item"></div>
+        <div class="placeholder-content_item"></div>
+        <div class="placeholder-content_item"></div>
+        <div class="placeholder-content_item"></div>
+        <div class="placeholder-content_item"></div>
+        <div class="placeholder-content_item"></div>
+        <div class="placeholder-content_item"></div>
+        <div class="placeholder-content_item"></div>
+        <div class="placeholder-content_item"></div>
+        <div class="placeholder-content_item"></div>
       </div>
 
-  </div>
+    </div>
 
-</main>
+  </main>
 </div>
 <div *ngIf="articles.length>0 else emptyTemplate ">
   <div *ngFor="let item of articles | paginate : {itemsPerPage: pageSize, currentPage: page, totalItems:totalCount}">
@@ -44,9 +44,9 @@
           <img [src]="picture || default_article" class="card-img">
         </div>
         <div class="col-md-8">
-          <h5 class="card-title">
-            {{title}}
-          </h5>
+          <h1 class="card-title">
+            {{title | uppercase}}
+          </h1>
           <p class="card-text">{{contentSummary}}</p>
         </div>
       </div>
@@ -67,7 +67,7 @@
       <span class="badge badge-pill badge-primary">
         <i class="fa fa-comment"></i> {{commentCount}}
       </span>
-      <a [routerLink]="['/article',id]" class="btn btn-primary btn-sm float-right">
+      <a [routerLink]="['/article', title | urlformat, id]" class="btn btn-primary btn-sm float-right">
         read more
       </a>
     </div>

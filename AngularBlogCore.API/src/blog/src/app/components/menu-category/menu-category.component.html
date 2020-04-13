@@ -1,5 +1,5 @@
 <div class="card border-primary">
-  <div class="card-header">Category</div>
+  <div class="card-header"><strong>Category</strong></div>
   <div class="card-body text-primary">
 
 
@@ -13,7 +13,7 @@
 
       <strong>
         <a [routerLink]="[ '/category',item.name,item.id]" class="btn btn=link">
-          <i class="fa fa-arrow-circle-right"></i> {{item.name}} </a>
+          <i class="fa fa-arrow-circle-right"></i> {{item.name | urlformat}} </a>
       </strong>
 
 

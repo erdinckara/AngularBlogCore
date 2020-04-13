@@ -14,11 +14,12 @@ import { AdminNavComponent } from './nav/admin-nav/admin-nav.component';
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
     AdminLayoutComponent,
-    AdminNavComponent
+    AdminNavComponent,
   ],
   imports: [
     BrowserModule,

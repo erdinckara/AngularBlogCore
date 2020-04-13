@@ -25,7 +25,7 @@ export class MainNavComponent implements OnInit {
           this.pageActive = MainPage.aboutme;
         } else if (x.url.indexOf("contact") > 0) {
           this.pageActive = MainPage.contact;
-        }else{
+        } else {
           this.pageActive = MainPage.home;
         }
       }
@@ -33,6 +33,14 @@ export class MainNavComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  search(searchText: string) {
+
+    if (!searchText) {
+      return false;
+    }
+    this.router.navigateByUrl(`/search/page/1?s=${searchText}`);
   }
 
 }
