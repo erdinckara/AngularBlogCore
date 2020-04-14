@@ -216,10 +216,15 @@ namespace AngularBlogCore.API.Controllers {
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut ("{id}")]
         public async Task<IActionResult> PutArticle (int id, Article article) {
-            if (id != article.Id) {
-                return BadRequest ();
-            }
 
+            var firstArticle = _context.Article.Find (id);
+
+            firstArticle.Title = article.Title;
+            firstArticle.ContentMain = article.ContentMain;
+            firstArticle.ContentSummary = article.ContentSummary;
+            firstArticle.CategoryId = article.Category.Id;
+            firstArticle.Picture = article.Picture;
+            
             _context.Entry (article).State = EntityState.Modified;
 
             try {
@@ -240,6 +245,15 @@ namespace AngularBlogCore.API.Controllers {
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
         public async Task<IActionResult> PostArticle (Article article) {
+
+            if (article.Category != null) {
+                article.CategoryId = article.Category.Id;
+            }
+
+            article.Category = null;
+            article.PublishDate = DateTime.Now;
+            article.ViewCount = 0;
+
             _context.Article.Add (article);
             await _context.SaveChangesAsync ();
 
@@ -287,6 +301,7 @@ namespace AngularBlogCore.API.Controllers {
         [HttpPost]
         [Route ("SaveArticlePicture")]
         public async Task<IActionResult> SaveArticlePicture (IFormFile picture) {
+
             var fileName = $"{Guid.NewGuid ().ToString ()}{Path.GetExtension (picture.FileName)}";
             var path = Path.Combine (Directory.GetCurrentDirectory (), "wwwroot/articlePictures", fileName);
 

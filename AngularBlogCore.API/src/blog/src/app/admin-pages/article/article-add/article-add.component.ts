@@ -3,6 +3,9 @@ import { ArticleService } from 'src/app/service/article.service';
 import { FormGroup, FormControl, Validator, AbstractControl, Validators } from "@angular/forms";
 import { CategoryService } from 'src/app/service/category.service';
 import { Category } from 'src/app/Model/category';
+import { MyvalidationService } from 'src/app/service/myvalidation.service';
+import { Router } from '@angular/router';
+import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 
 @Component({
   selector: 'app-article-add',
@@ -18,9 +21,15 @@ export class ArticleAddComponent implements OnInit {
   loading: boolean;
   info: string;
   categories: Category[];
+  public Editor = DecoupledEditor;
 
+  constructor(
+    private articleService: ArticleService,
+    private categoryService: CategoryService,
+    public myValidationService: MyvalidationService,
+    private router: Router
 
-  constructor(private articleService: ArticleService, private categoryService: CategoryService) { }
+  ) { }
 
   ngOnInit(): void {
 
@@ -29,14 +38,22 @@ export class ArticleAddComponent implements OnInit {
     this.articleForm = new FormGroup({
       title: new FormControl("article 1", Validators.required),
       contentSummary: new FormControl("content summary 1", Validators.required),
-      content: new FormControl("content 1"),
+      contentMain: new FormControl("content 1", Validators.required),
       category: new FormControl("", Validators.required),
       picture: new FormControl(""),
     });
 
   }
 
+  public onReady( editor ) {
+    editor.ui.getEditableElement().parentElement.insertBefore(
+        editor.ui.view.toolbar.element,
+        editor.ui.getEditableElement()
+    );
+}
+
   onSubmit() {
+
     if (!this.articleForm.valid)
       return false;
 
@@ -44,9 +61,11 @@ export class ArticleAddComponent implements OnInit {
     this.articleService.addArticle(this.articleForm.value).subscribe(data => {
       console.log("articles has added", data);
       this.success = true;
+
+      this.router.navigateByUrl("/admin/article/list");
     }, error => {
       this.success = false;
-      this.info = "There is an error" + error;
+      this.info = "There is an error: " + error.message;
     });
   }
 
@@ -78,6 +97,9 @@ export class ArticleAddComponent implements OnInit {
 
   }
 
+  get getControls() {
+    return this.articleForm.controls
+  }
 
 
 }

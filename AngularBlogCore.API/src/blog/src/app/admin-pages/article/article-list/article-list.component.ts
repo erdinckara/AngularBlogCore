@@ -11,7 +11,7 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class ArticleListComponent implements OnInit {
 
-  displayedColumns: string[] = ["picture","title", "category", "commentCount","publishDate","viewCount"];
+  displayedColumns: string[] = ["picture","title", "category", "commentCount","publishDate","viewCount","actions"];
   dataSource;
   articles: Article[];
 
