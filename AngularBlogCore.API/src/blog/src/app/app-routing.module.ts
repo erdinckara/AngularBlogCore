@@ -12,6 +12,11 @@ import { CategoryArticlesComponent } from './pages/category-articles/category-ar
 import { SearchArticleComponent } from './pages/search-article/search-article.component';
 import { ArchiveComponent } from './pages/archive/archive.component';
 
+import { AdminHomeComponent } from './admin-pages/admin-home/admin-home.component';
+import { AdminArticleComponent } from './admin-pages/article/admin-article/admin-article.component';
+import { ArticleListComponent } from './admin-pages/article/article-list/article-list.component';
+import { ArticleUpdateComponent } from './admin-pages/article/article-update/article-update.component';
+import { ArticleAddComponent } from './admin-pages/article/article-add/article-add.component';
 
 
 const routes: Routes = [
@@ -62,8 +67,36 @@ const routes: Routes = [
     ]
   },
   {
-    path: "Admin",
-    component: AdminLayoutComponent
+    path: "admin",
+    component: AdminLayoutComponent,
+    children: [
+      {
+        path: "",
+        component: AdminHomeComponent
+      },
+      {
+        path: "home",
+        component: AdminHomeComponent
+      },
+      {
+        path: "article",
+        component: AdminArticleComponent,
+        children: [
+          {
+            path: "list",
+            component: ArticleListComponent
+          },
+          {
+            path: "update/:id",
+            component: ArticleUpdateComponent
+          },
+          {
+            path: "add",
+            component: ArticleAddComponent
+          },
+        ]
+      },
+    ]
   }
 ];
 

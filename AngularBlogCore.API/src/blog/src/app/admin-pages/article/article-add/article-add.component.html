@@ -1,0 +1,35 @@
+<div class="row">
+  <div class="col-md-9">
+
+    <form *ngIf="info==null" (ngSubmit)="onSubmit" [formGroup]="articleForm">
+
+      <div class="form-container">
+        <mat-form-field>
+          <input type="text" placeholder="select category" formControlName="category" matInput [matAutocomplete]="auto">
+          <mat-autocomplete [displayWith]="displayCategoryName" #auto="matAutocomplete">
+            <mat-option *ngFor="let category of categories" [value]="category">
+              {{category.name}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+    </form>
+
+
+  </div>
+  <div class="col-md-3">
+    <div class="card text-white bg-primary">
+      <div class="card-header">
+        Article Picture
+      </div>
+      <div class="card-body">
+        <img [src]="picture || 'assets/default_article.jpg'" class="img-thumbnail">
+      </div>
+      <div class="card-footer">
+        <input (change)="upload($event)" type="file" class="form-control" name="image">
+      </div>
+    </div>
+
+
+  </div>
+</div>

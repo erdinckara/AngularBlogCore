@@ -76,11 +76,30 @@ export class ArticleService {
       }));
   }
 
-  articleViewCountUp(id:number) {
+  articleViewCountUp(id: number) {
 
     let api = `${this.apiUrl}/ArticleViewCountUp/${id}`;
 
     return this.httpClient.get(api);
+
+  }
+
+  getArticlesWithoutPg() {
+
+    return this.httpClient.get<Article[]>(this.apiUrl);
+
+  }
+
+  saveArticlePicture(image) {
+
+    let api = `${this.apiUrl}/SaveArticlePicture`;
+    return this.httpClient.post<any>(api, image);
+
+  }
+
+  addArticle(article: Article) {
+
+    return this.httpClient.post(this.apiUrl, article);
 
   }
 

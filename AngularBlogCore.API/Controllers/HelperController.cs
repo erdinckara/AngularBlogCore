@@ -19,8 +19,8 @@ namespace AngularBlogCore.API.Controllers {
 
             SmtpClient smtpClient = new SmtpClient ("smtp.gmail.com",587);
 
-            mailMessage.From = new MailAddress ("erdinckara10@gmail.com");
-            mailMessage.To.Add ("erdinc.kara@primegov.com");
+            mailMessage.From = new MailAddress ("erdinc.kara.tr@gmail.com");
+            mailMessage.To.Add ("erdinckara10@gmail.com");
 
             mailMessage.Subject = contact.Subject;
             mailMessage.Body = contact.Message;
@@ -28,7 +28,7 @@ namespace AngularBlogCore.API.Controllers {
             smtpClient.Port = 587;
             smtpClient.EnableSsl = true;
 
-            smtpClient.Credentials = new System.Net.NetworkCredential ("erdinckara10@gmail.com", "");
+            smtpClient.Credentials = new System.Net.NetworkCredential ("erdinc.kara.tr@gmail.com", "");
 
             smtpClient.Send (mailMessage);
 

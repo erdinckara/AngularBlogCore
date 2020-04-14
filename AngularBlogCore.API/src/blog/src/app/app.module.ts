@@ -3,30 +3,23 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { MainModule } from './pages/main.module';
-
+import { AdminModule } from "./admin-pages/admin.module";
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
-import { AdminLayoutComponent } from './layout/admin-layout/admin-layout.component';
-import { AdminNavComponent } from './nav/admin-nav/admin-nav.component';
-
-
-
-
 @NgModule({
   declarations: [
-    AppComponent,
-    AdminLayoutComponent,
-    AdminNavComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    MainModule
+    MainModule,
+    AdminModule
   ],
   providers: [],
   bootstrap: [AppComponent]

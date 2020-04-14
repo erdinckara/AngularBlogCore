@@ -4,6 +4,7 @@ import {BrowserModule} from '@angular/platform-browser'
 import {HttpClientModule} from '@angular/common/http';
 import {AppRoutingModule } from '../app-routing.module';
 import {ComponentsModule} from '../components/components.module';
+import { MaterialModule  } from "../modules/material.module";
 
 import { HomeComponent } from './home/home.component';
 import { AboutMeComponent } from './about-me/about-me.component';
@@ -34,7 +35,8 @@ import { ArchiveComponent } from './archive/archive.component';
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    ComponentsModule
+    ComponentsModule,
+    MaterialModule
   ]
 })
 export class MainModule { }

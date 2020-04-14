@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AngularBlogCore.API.Models;
 using AngularBlogCore.API.Response;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,8 +21,27 @@ namespace AngularBlogCore.API.Controllers {
 
         // GET: api/Articles
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Article>>> GetArticle () {
-            return await _context.Article.ToListAsync ();
+        public async Task<IActionResult> GetArticle () {
+
+            var articleResponse = await _context.Article
+                .Include (x => x.Category)
+                .Include (x => x.Comment)
+                .OrderByDescending (x => x.PublishDate)
+                .Select (x => new ArticleResponse () {
+                    Id = x.Id,
+                        Title = x.Title,
+                        Picture = x.Picture,
+                        ViewCount = x.ViewCount,
+                        CommentCount = x.Comment.Count,
+                        PublishDate = x.PublishDate,
+                        Category = new CategoryResponse () {
+                            Id = x.Category.Id,
+                                Name = x.Category.Name
+                        }
+                })
+                .ToListAsync ();
+
+            return Ok (articleResponse);
         }
 
         // GET: api/Articles
@@ -218,11 +239,11 @@ namespace AngularBlogCore.API.Controllers {
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
-        public async Task<ActionResult<Article>> PostArticle (Article article) {
+        public async Task<IActionResult> PostArticle (Article article) {
             _context.Article.Add (article);
             await _context.SaveChangesAsync ();
 
-            return CreatedAtAction ("GetArticle", new { id = article.Id }, article);
+            return Ok ();
         }
 
         // DELETE: api/Articles/5
@@ -263,6 +284,24 @@ namespace AngularBlogCore.API.Controllers {
             return new Tuple<IEnumerable<ArticleResponse>, int> (articleResponse, totalCount);
         }
 
+        [HttpPost]
+        [Route ("SaveArticlePicture")]
+        public async Task<IActionResult> SaveArticlePicture (IFormFile picture) {
+            var fileName = $"{Guid.NewGuid ().ToString ()}{Path.GetExtension (picture.FileName)}";
+            var path = Path.Combine (Directory.GetCurrentDirectory (), "wwwroot/articlePictures", fileName);
+
+            using (var stream = new FileStream (path, FileMode.Create)) {
+
+                await picture.CopyToAsync (stream);
+
+            }
+
+            var result = new {
+                path = $"http://{Request.Host}/articlePictures/{fileName}"
+            };
+
+            return Ok (result);
+        }
         private bool ArticleExists (int id) {
             return _context.Article.Any (e => e.Id == id);
         }
