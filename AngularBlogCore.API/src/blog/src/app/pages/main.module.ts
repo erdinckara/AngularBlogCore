@@ -15,6 +15,7 @@ import { ArticleComponent } from './article/article.component';
 import { CategoryArticlesComponent } from './category-articles/category-articles.component';
 import { SearchArticleComponent } from './search-article/search-article.component';
 import { ArchiveComponent } from './archive/archive.component';
+import { AdminLoginComponent } from './admin-login/admin-login.component';
 
 
 
@@ -28,7 +29,8 @@ import { ArchiveComponent } from './archive/archive.component';
     ArticleComponent,
     CategoryArticlesComponent,
     SearchArticleComponent,
-    ArchiveComponent
+    ArchiveComponent,
+    AdminLoginComponent
   ],
   imports: [
     CommonModule,

@@ -109,4 +109,8 @@ export class ArticleService {
 
   }
 
+  deleteArticle(id: number) {
+    return this.httpClient.delete(`${this.apiUrl}/${id}`);
+  }
+
 }

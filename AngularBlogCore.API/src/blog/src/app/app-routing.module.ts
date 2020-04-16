@@ -17,6 +17,8 @@ import { AdminArticleComponent } from './admin-pages/article/admin-article/admin
 import { ArticleListComponent } from './admin-pages/article/article-list/article-list.component';
 import { ArticleUpdateComponent } from './admin-pages/article/article-update/article-update.component';
 import { ArticleAddComponent } from './admin-pages/article/article-add/article-add.component';
+import { AdminLoginComponent } from './pages/admin-login/admin-login.component';
+import { AuthGuardService } from './service/auth-guard.service';
 
 
 const routes: Routes = [
@@ -64,11 +66,16 @@ const routes: Routes = [
         path: "contact",
         component: ContactComponent
       },
+      {
+        path: "adminlogin",
+        component: AdminLoginComponent
+      },
     ]
   },
   {
     path: "admin",
     component: AdminLayoutComponent,
+    canActivate: [AuthGuardService],
     children: [
       {
         path: "",

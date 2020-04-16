@@ -1,0 +1,14 @@
+<app-page-title [title]="'Login Admin Panel'">
+</app-page-title>
+
+<div class="example-container">
+  <mat-form-field >
+    <input #emailInput matInput placeholder="email">
+  </mat-form-field>
+  <br>
+  <mat-form-field >
+    <input #passwordInput matInput placeholder="password">
+  </mat-form-field>
+  <br>
+  <button (click)="login(emailInput.value,passwordInput.value)" mat-raised-button color="primary">Login</button>
+</div>

@@ -225,7 +225,7 @@ namespace AngularBlogCore.API.Controllers {
             firstArticle.CategoryId = article.Category.Id;
             firstArticle.Picture = article.Picture;
             
-            _context.Entry (article).State = EntityState.Modified;
+            _context.Entry (firstArticle).State = EntityState.Modified;
 
             try {
                 await _context.SaveChangesAsync ();
@@ -262,7 +262,7 @@ namespace AngularBlogCore.API.Controllers {
 
         // DELETE: api/Articles/5
         [HttpDelete ("{id}")]
-        public async Task<ActionResult<Article>> DeleteArticle (int id) {
+        public async Task<IActionResult> DeleteArticle (int id) {
             var article = await _context.Article.FindAsync (id);
             if (article == null) {
                 return NotFound ();
@@ -271,7 +271,7 @@ namespace AngularBlogCore.API.Controllers {
             _context.Article.Remove (article);
             await _context.SaveChangesAsync ();
 
-            return article;
+            return Ok();
         }
 
         public async Task<Tuple<IEnumerable<ArticleResponse>, int>> ArticlePagination (IQueryable<Article> query, int page, int pageSize) {
