@@ -16,6 +16,7 @@ import { CategoryArticlesComponent } from './category-articles/category-articles
 import { SearchArticleComponent } from './search-article/search-article.component';
 import { ArchiveComponent } from './archive/archive.component';
 import { AdminLoginComponent } from './admin-login/admin-login.component';
+import { FooterNavComponent } from '../nav/footer-nav/footer-nav.component';
 
 
 
@@ -30,7 +31,8 @@ import { AdminLoginComponent } from './admin-login/admin-login.component';
     CategoryArticlesComponent,
     SearchArticleComponent,
     ArchiveComponent,
-    AdminLoginComponent
+    AdminLoginComponent,
+    FooterNavComponent
   ],
   imports: [
     CommonModule,
